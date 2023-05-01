@@ -92,8 +92,8 @@ def exec(file_name, file_path):
     """执行"""
 
     # 1、根据 tag 判断是否是需要发布 Hexo 的文章
-    tags, is_hexo_article = is_hexo_article(file_path=file_path)
-    if not is_hexo_article:
+    tags, is_hexo_article_flag = is_hexo_article(file_path=file_path)
+    if not is_hexo_article_flag:
         return
     english_title = tags[0]  # 第一个标签为英文名
 
