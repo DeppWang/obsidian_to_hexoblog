@@ -2,7 +2,6 @@ import datetime
 import subprocess
 import os
 import re
-# /home/runner/work/Obsidian/Obsidian/HexoBlog-Resp/source/_posts
 HEXO_POST_PATH = "/home/runner/work/Obsidian/Obsidian/HexoBlog-Resp/source/_posts"
 OBSIDIAN_PATH = "/home/runner/work/Obsidian/Obsidian/Obsidian-Resp"
 FORMAT_DATETIME = "{:%Y-%m-%d %H:%M:%S}"
