@@ -11,7 +11,7 @@ STR_FORMAT_DATETIME2 = '%a %b %d %H:%M:%S %Y %z'
 DATE_REGEX = re.compile(r"\ndate:\s(.*)\n")
 ENGLISH_TITLE_REGEX = re.compile(r"\nenglish_title:\s(.*)\n")
 OBSIDIAN_TO_HEXOBLOG_TAG = "Obsidian-to-HexoBlog-Tag"
-
+ 
 
 def get_obsidian_tags(file_path):
     """获取 Obsidian 文章的 tag"""
@@ -123,7 +123,7 @@ def exec(file_name, file_path):
     if not is_need:
         return
 
-    # 2、如果需要，更新 Hexo 文章
+    # 3、更新 Hexo 文章
     update_hexo_article(tags, english_title, create_time, update_time, file_name, post_article_path, file_path)
 
 
