@@ -46,7 +46,7 @@ def get_hexo_post_english_title_2_title():
         hexo_post_english_title_2_title[hexo_english_title] = file_name
     return hexo_post_english_title_2_title
 
-def is_need_post_hexo(post_article_path, english_title, file_path, file_name):
+def is_need_post_hexo(post_article_path, english_title, file_path):
     """判断是否需要发布 HexoBlog"""
 
     create_time = FORMAT_DATETIME.format(datetime.datetime.fromtimestamp(os.path.getmtime(file_path)))
