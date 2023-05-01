@@ -1,0 +1,52 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Obsidian to HexoBlog
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # 只有 commit 中包含 manual 才执行后面操作
+    # https://stackoverflow.com/questions/71361539/github-action-test-if-a-commit-containing-a-specific-word-was-previously-made/71364384#71364384
+    if: "contains(github.event.head_commit.message, 'manual')"
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Clone Obsidian
+        uses: actions/checkout@v3
+        with:
+          path: Obsidian-Resp
+          fetch-depth: 0  # 全量克隆，默认浅克隆，历史 commit 时间戳为最后 commit，影响设置文章最后更新时间
+        
+      - name: Clone HexoBlog
+        uses: actions/checkout@v3
+        with:
+          repository: DeppWang/HexoBlog
+          token: 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
+          path: HexoBlog-Resp
+      
+      - name: Clone obsidian_to_hexoblog
+        uses: actions/checkout@v3
+        with:
+          repository: DeppWang/obsidian_to_hexoblog
+          token: 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
+          path: obsidian_to_hexoblog
+        
+      - name: Setup Python ENV
+        uses: actions/setup-python@v4.2.0
+        with:
+          # Version range or exact version of Python or PyPy to use, using SemVer's version range syntax. Reads from .python-version if unset.
+          python-version: 3.7 # optional
+          
+      - run: python obsidian_to_hexoblog/obsidian_to_hexoblog.py
+      
+      - run: sh Obsidian-Resp/.github/push_hexoblog.sh
