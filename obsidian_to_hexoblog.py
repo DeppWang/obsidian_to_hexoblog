@@ -3,8 +3,8 @@ import subprocess
 import os
 import re
 # /home/runner/work/Obsidian/Obsidian/HexoBlog-Resp/source/_posts
-HEXO_POST_PATH = "HexoBlog-Resp/source/_posts"
-OBSIDIAN_PATH = "Obsidian-Resp"
+HEXO_POST_PATH = "/home/runner/work/Obsidian/Obsidian/HexoBlog-Resp/source/_posts"
+OBSIDIAN_PATH = "/home/runner/work/Obsidian/Obsidian/Obsidian-Resp"
 FORMAT_DATETIME = "{:%Y-%m-%d %H:%M:%S}"
 STR_FORMAT_DATETIME = '%Y-%m-%d %H:%M:%S'
 DATE_REGEX = re.compile(r"\ndate:\s(.*)\n")
