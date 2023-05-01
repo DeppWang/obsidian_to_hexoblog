@@ -12,8 +12,8 @@ ENGLISH_TITLE_REGEX = re.compile(r"\nenglish_title:\s(.*)\n")
 OBSIDIAN_TO_HEXOBLOG_TAG = "Obsidian-to-HexoBlog-Tag"
 
 
-def is_hexo_article(file_path):
-    """判断是否是需要发布 Hexo 的文章"""
+def get_obsidian_tags(file_path):
+    """获取 Obsidian 文章的 tag"""
 
     first_line = ""
     try:
@@ -26,11 +26,8 @@ def is_hexo_article(file_path):
         print(f"Error opening/reading file: {e}")
         return [], False
 
-    tags = [tag for tag in first_line.split('#') if tag]
-    # 如果没有 Obsidian-to-HexoBlog-Tag 标签，跳过
-    if "Obsidian-to-HexoBlog-Tag" not in tags:
-        return tags, True
-    return tags, False
+    return [tag for tag in first_line.split('#') if tag]
+
 
 def get_hexo_post_english_title_2_title():
     """获取 HexoBlog 所有文章的英文名与标题的对应关系"""
@@ -45,6 +42,7 @@ def get_hexo_post_english_title_2_title():
         hexo_english_title = ENGLISH_TITLE_REGEX.findall(content)[0]
         hexo_post_english_title_2_title[hexo_english_title] = file_name
     return hexo_post_english_title_2_title
+
 
 def is_need_post_hexo(post_article_path, english_title, file_path):
     """判断是否需要发布 HexoBlog"""
@@ -112,9 +110,12 @@ def exec(file_name, file_path):
     """执行"""
 
     # 1、根据 tag 判断是否是需要发布 Hexo 的文章
-    tags, is_hexo_article_flag = is_hexo_article(file_path=file_path)
-    if not is_hexo_article_flag:
+    tags = get_obsidian_tags(file_path=file_path)
+    # 如果没有 Obsidian-to-HexoBlog-Tag 标签
+    if OBSIDIAN_TO_HEXOBLOG_TAG not in tags:
         return
+
+    print("tags: ", tags)
     english_title = tags[0]  # 第一个标签为英文名
 
     # 2、如果是，判断是否需要发布 HexoBlog
