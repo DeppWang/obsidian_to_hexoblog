@@ -32,18 +32,35 @@ def is_hexo_article(file_path):
         return tags, True
     return tags, False
 
+def get_hexo_post_english_title_2_title():
+    """获取 HexoBlog 所有文章的英文名与标题的对应关系"""
 
-def is_need_post_hexo(post_article_path, english_title, file_path):
+    hexo_post_english_title_2_title = {}
+    for file_name in os.listdir(HEXO_POST_PATH):
+        file_path = os.path.join(HEXO_POST_PATH, file_name)
+        if os.path.isdir(file_path):
+            continue
+        with open(file_path, "r") as f:
+            content = f.read()
+        hexo_english_title = ENGLISH_TITLE_REGEX.findall(content)[0]
+        hexo_post_english_title_2_title[hexo_english_title] = file_name
+    return hexo_post_english_title_2_title
+
+def is_need_post_hexo(post_article_path, english_title, file_path, file_name):
     """判断是否需要发布 HexoBlog"""
 
-    print(os.listdir(HEXO_POST_PATH))
-    print(os.listdir("/home/runner/work/Obsidian/Obsidian"))
-    with open(post_article_path, "r") as f:
-        content = f.read()
-    hexo_english_title = ENGLISH_TITLE_REGEX.findall(content)[0]
     create_time = FORMAT_DATETIME.format(datetime.datetime.fromtimestamp(os.path.getmtime(file_path)))
+    # 如果 Obsidian 修改了标题，修改 HexoBlog 英文名同名文章的标题
+    if not os.path.exists(post_article_path):
+        english_title_2_title = get_hexo_post_english_title_2_title()
+        if english_title in english_title_2_title:
+            post_article_path_new = os.path.join(HEXO_POST_PATH, english_title_2_title[english_title])
+            os.rename(post_article_path_new, post_article_path)
+
     # 如果 Obsidian 文件已经在 HexoBlog 中存在，判断 Obsidian 文件更新时间与 HexoBlog 的最后更新时间
-    if os.path.exists(post_article_path) or english_title == hexo_english_title:
+    if os.path.exists(post_article_path):
+        with open(post_article_path, "r") as f:
+            content = f.read()
         date_result = DATE_REGEX.findall(content)
         create_time = date_result[0]
         # HexoBlog 最后更新时间
