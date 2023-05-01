@@ -69,6 +69,8 @@ def is_need_post_hexo(post_article_path, english_title, file_path):
         git_log_result = subprocess.run(["git", "log", "-1", "--format=%cd", "--",
                                         file_path], cwd=OBSIDIAN_PATH, capture_output=True)
         print(git_log_result.stdout.decode())
+        git_log_result2 = subprocess.run(["git", "log"], cwd=OBSIDIAN_PATH, capture_output=True)
+        print(git_log_result2.stdout.decode())
         # Decode the output and extract the date and time string
         git_last_commit_date_str = git_log_result.stdout.decode().strip()
         print(git_last_commit_date_str)
