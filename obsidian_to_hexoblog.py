@@ -7,6 +7,7 @@ HEXO_POST_PATH = "/home/runner/work/Obsidian/Obsidian/HexoBlog-Resp/source/_post
 OBSIDIAN_PATH = "/home/runner/work/Obsidian/Obsidian/Obsidian-Resp"
 FORMAT_DATETIME = "{:%Y-%m-%d %H:%M:%S}"
 STR_FORMAT_DATETIME = '%Y-%m-%d %H:%M:%S'
+STR_FORMAT_DATETIME2 = '%a %b %d %H:%M:%S %Y %z'
 DATE_REGEX = re.compile(r"\ndate:\s(.*)\n")
 ENGLISH_TITLE_REGEX = re.compile(r"\nenglish_title:\s(.*)\n")
 OBSIDIAN_TO_HEXOBLOG_TAG = "Obsidian-to-HexoBlog-Tag"
@@ -71,7 +72,8 @@ def is_need_post_hexo(post_article_path, english_title, file_path):
         # Decode the output and extract the date and time string
         git_last_commit_date_str = git_log_result.stdout.decode().strip()
         print(git_last_commit_date_str)
-        file_git_last_commit_date = datetime.datetime.strptime(git_last_commit_date_str, STR_FORMAT_DATETIME)
+        dt = datetime.strptime(git_last_commit_date_str, STR_FORMAT_DATETIME2)
+        file_git_last_commit_date = dt.strptime(git_last_commit_date_str, STR_FORMAT_DATETIME)
         return create_time, file_git_last_commit_date, file_git_last_commit_date != hexo_update_time
     return create_time, '', False
 
