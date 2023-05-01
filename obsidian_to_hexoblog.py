@@ -116,25 +116,5 @@ def transf():
         exec(file_name, file_path)
 
 
-# if __name__ == "__main__":
-#     transf()
-
-
 if __name__ == "__main__":
-    import subprocess
-    import datetime
-    # Replace with the path to your file and the Git repository root directory
-    file_path = "Linux Bash 和 Zsh 中配置命令别名提升效率.md"
-    repo_dir = "/Users/yanjie/Obsidian"
-
-    # Run the Git command to get the last commit date for the file
-    result = subprocess.run(["git", "log", "-1", "--format=%cd", "--", file_path], cwd=repo_dir, capture_output=True)
-
-    # Decode the output and extract the date and time string
-    date_string = result.stdout.decode().strip()
-    print(date_string)
-
-    # Convert the date string to a datetime object
-    commit_date = datetime.datetime.strptime(date_string, "%a %b %d %H:%M:%S %Y %z")
-
-    print(commit_date)
+    transf()
