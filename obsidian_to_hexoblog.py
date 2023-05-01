@@ -36,6 +36,7 @@ def is_hexo_article(file_path):
 def is_need_post_hexo(post_article_path, english_title, file_path):
     """判断是否需要发布 HexoBlog"""
 
+    os.listdir(HEXO_POST_PATH)
     with open(post_article_path, "r") as f:
         content = f.read()
     hexo_english_title = ENGLISH_TITLE_REGEX.findall(content)[0]
