@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: DeppWang/HexoBlog
-          token: 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
+          token: ${{ secrets.MY_CUSTOM_TOKEN }} #
           path: HexoBlog-Resp
       
       - name: Clone obsidian_to_hexoblog
