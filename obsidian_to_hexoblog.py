@@ -64,12 +64,14 @@ def is_need_post_hexo(post_article_path, english_title, file_path):
         # HexoBlog 最后更新时间
         update_time_str = date_result[1] if len(date_result) >= 2 else date_result[0]
         update_time_str = update_time_str if update_time_str else create_time_str
+        print('update_time_str:', update_time_str)
         hexo_update_time = datetime.datetime.strptime(update_time_str, STR_FORMAT_DATETIME)
         # Run the Git command to get the last commit date for the file
         git_log_result = subprocess.run(["git", "log", "-1", "--format=%cd", "--",
                                         file_path], cwd=OBSIDIAN_PATH, capture_output=True)
         # Decode the output and extract the date and time string
         git_last_commit_date_str = git_log_result.stdout.decode().strip()
+        print('git_last_commit_date_str:', git_last_commit_date_str)
         dt = datetime.datetime.strptime(git_last_commit_date_str, STR_FORMAT_DATETIME2)
         file_git_last_commit_date = dt.strftime(STR_FORMAT_DATETIME)
         # 如果 hexoblog 中的 update_date 和文件最后更新时间不相同，则需要更新
