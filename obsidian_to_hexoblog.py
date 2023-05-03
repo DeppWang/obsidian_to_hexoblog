@@ -130,6 +130,7 @@ def transf():
     file_list = os.listdir(OBSIDIAN_PATH)
     for file_name in file_list:
         file_path = os.path.join(OBSIDIAN_PATH, file_name)
+        print(file_path)
         if os.path.isdir(file_path):
             continue
         exec(file_name, file_path)
