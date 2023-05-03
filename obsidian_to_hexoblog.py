@@ -7,7 +7,7 @@ OBSIDIAN_PATH = "/home/runner/work/Obsidian/Obsidian/Obsidian-Resp"
 FORMAT_DATETIME = "{:%Y-%m-%d %H:%M:%S}"
 STR_FORMAT_DATETIME = '%Y-%m-%d %H:%M:%S'
 STR_FORMAT_DATETIME2 = '%a %b %d %H:%M:%S %Y %z'
-DATE_REGEX = re.compile(r"\ndate:\s(.*)\n")
+DATE_REGEX = re.compile(r"date:\s(.*)\n")
 ENGLISH_TITLE_REGEX = re.compile(r"\nenglish_title:\s(.*)\n")
 OBSIDIAN_TO_HEXOBLOG_TAG = "Obsidian-to-HexoBlog-Tag"
  
@@ -60,9 +60,10 @@ def is_need_post_hexo(post_article_path, english_title, file_path):
         with open(post_article_path, "r") as f:
             content = f.read()
         date_result = DATE_REGEX.findall(content)
-        create_time = date_result[0]
+        create_time_str = date_result[0]
         # HexoBlog 最后更新时间
         update_time_str = date_result[1] if len(date_result) == 2 else date_result[0]
+        print(date_result, create_time_str, update_time_str)
         hexo_update_time = datetime.datetime.strptime(update_time_str, STR_FORMAT_DATETIME)
         # Run the Git command to get the last commit date for the file
         git_log_result = subprocess.run(["git", "log", "-1", "--format=%cd", "--",
@@ -73,9 +74,9 @@ def is_need_post_hexo(post_article_path, english_title, file_path):
         file_git_last_commit_date = dt.strftime(STR_FORMAT_DATETIME)
         # 如果 hexoblog 中的 update_date 和文件最后更新时间不相同，则需要更新
         print('file_git_last_commit_date: %s, hexo_update_time: %s', file_git_last_commit_date, hexo_update_time)
-        return create_time, file_git_last_commit_date, file_git_last_commit_date != hexo_update_time
+        return create_time_str, file_git_last_commit_date, file_git_last_commit_date != hexo_update_time
     # 如果不存在，则需求发布到 HexoBlog
-    return create_time, create_time, True
+    return create_time_str, create_time_str, True
 
 
 def update_hexo_article(tags, english_title, create_time, update_time, file_name,
