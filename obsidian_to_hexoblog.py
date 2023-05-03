@@ -71,8 +71,10 @@ def is_need_post_hexo(post_article_path, english_title, file_path):
         git_last_commit_date_str = git_log_result.stdout.decode().strip()
         dt = datetime.datetime.strptime(git_last_commit_date_str, STR_FORMAT_DATETIME2)
         file_git_last_commit_date = dt.strftime(STR_FORMAT_DATETIME)
-        return create_time, file_git_last_commit_date, file_git_last_commit_date != hexo_update_time
-    return create_time, '', False
+        # 如果 hexoblog 中 update_date 和 文件最后更新时间不相同，则需要更新
+        return create_time, file_git_last_commit_date, not (file_git_last_commit_date != hexo_update_time)
+    # 如果不存在，则需求发布到 HexoBlog
+    return create_time, '', True
 
 
 def update_hexo_article(tags, english_title, create_time, update_time, file_name,
@@ -135,7 +137,6 @@ def transf():
             continue
         if os.path.isdir(file_path):
             continue
-     
         exec(file_name, file_path)
 
 
