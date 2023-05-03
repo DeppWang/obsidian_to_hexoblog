@@ -117,7 +117,7 @@ def exec(file_name, file_path):
     # 如果没有 Obsidian-to-HexoBlog-Tag 标签
     if OBSIDIAN_TO_HEXOBLOG_TAG not in tags:
         return
-    print('has tag', file_path)
+    # print('has tag', file_path)
     english_title = tags[0]  # 第一个标签为英文名
 
     # 2、如果是，判断是否需要发布 HexoBlog
