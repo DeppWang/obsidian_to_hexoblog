@@ -69,6 +69,7 @@ def is_need_post_hexo(post_article_path, english_title, file_path):
                                         file_path], cwd=OBSIDIAN_PATH, capture_output=True)
         # Decode the output and extract the date and time string
         git_last_commit_date_str = git_log_result.stdout.decode().strip()
+        print('git_last_commit_date_str:', git_last_commit_date_str)
         dt = datetime.datetime.strptime(git_last_commit_date_str, STR_FORMAT_DATETIME2)
         file_git_last_commit_date = dt.strftime(STR_FORMAT_DATETIME)
         # 如果 hexoblog 中的 update_date 和文件最后更新时间不相同，则需要更新
