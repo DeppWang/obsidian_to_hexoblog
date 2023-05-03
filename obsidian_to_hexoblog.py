@@ -113,7 +113,7 @@ def exec(file_name, file_path):
     # 如果没有 Obsidian-to-HexoBlog-Tag 标签
     if OBSIDIAN_TO_HEXOBLOG_TAG not in tags:
         return
-
+    print('has tag', file_path)
     english_title = tags[0]  # 第一个标签为英文名
 
     # 2、如果是，判断是否需要发布 HexoBlog
@@ -121,7 +121,7 @@ def exec(file_name, file_path):
     create_time, update_time, is_need = is_need_post_hexo(post_article_path, english_title, file_path)
     if not is_need:
         return
-
+    print('need post', file_path)
     # 3、更新 Hexo 文章
     update_hexo_article(tags, english_title, create_time, update_time, file_name, post_article_path, file_path)
 
@@ -135,6 +135,7 @@ def transf():
             continue
         if os.path.isdir(file_path):
             continue
+     
         exec(file_name, file_path)
 
 
