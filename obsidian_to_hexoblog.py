@@ -74,7 +74,7 @@ def is_need_post_hexo(post_article_path, english_title, file_path):
         # 如果 hexoblog 中 update_date 和 文件最后更新时间不相同，则需要更新
         return create_time, file_git_last_commit_date, not (file_git_last_commit_date != hexo_update_time)
     # 如果不存在，则需求发布到 HexoBlog
-    return create_time, '', True
+    return create_time, create_time, True
 
 
 def update_hexo_article(tags, english_title, create_time, update_time, file_name,
