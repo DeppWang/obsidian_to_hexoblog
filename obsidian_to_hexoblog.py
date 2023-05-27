@@ -120,6 +120,7 @@ def exec(file_name, file_path):
 
     # 2、如果是，判断是否需要发布 HexoBlog
     post_article_path = os.path.join(HEXO_POST_PATH, file_name)
+    print(post_article_path, english_title, file_path)
     create_time, update_time, is_need = is_need_post_hexo(post_article_path, english_title, file_path)
     if not is_need:
         return
