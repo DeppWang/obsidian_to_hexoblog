@@ -10,6 +10,7 @@ STR_FORMAT_DATETIME2 = '%a %b %d %H:%M:%S %Y %z'
 DATE_REGEX = re.compile(r"date:\s(.*)\n")
 ENGLISH_TITLE_REGEX = re.compile(r"\nenglish_title:\s(.*)\n")
 OBSIDIAN_TO_HEXOBLOG_TAG = "Obsidian-to-HexoBlog-Tag"
+OBSIDIAN_TO_WECHAT_TAG = "Obsidian-to-Wechat-Tag"
  
 
 def get_obsidian_tags(file_path):
@@ -82,7 +83,8 @@ def update_hexo_article(tags, english_title, create_time, update_time, file_name
                         post_article_path, file_path):
     """更新 Hexo 文章"""
 
-    tags.remove("Obsidian-to-HexoBlog-Tag")
+    tags.remove(OBSIDIAN_TO_HEXOBLOG_TAG)
+    tags.remove(OBSIDIAN_TO_WECHAT_TAG)
     tags.remove(tags[0])
     file_content = ""
     with open(file_path, 'r') as f:
