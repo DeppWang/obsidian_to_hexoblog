@@ -84,7 +84,8 @@ def update_hexo_article(tags, english_title, create_time, update_time, file_name
     """更新 Hexo 文章"""
 
     tags.remove(OBSIDIAN_TO_HEXOBLOG_TAG)
-    tags.remove(OBSIDIAN_TO_WECHAT_TAG)
+    if OBSIDIAN_TO_WECHAT_TAG in tags:
+        tags.remove(OBSIDIAN_TO_WECHAT_TAG)
     tags.remove(tags[0])
     file_content = ""
     with open(file_path, 'r') as f:
