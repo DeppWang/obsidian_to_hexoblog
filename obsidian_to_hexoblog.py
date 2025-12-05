@@ -134,15 +134,18 @@ def exec(file_name, file_path):
 
 
 def transf():
-    file_list = os.listdir(OBSIDIAN_PATH)
-    for file_name in file_list:
-        file_path = os.path.join(OBSIDIAN_PATH, file_name)
-        file_suffix = os.path.splitext(file_name)[1]  # 笔记后缀
-        if file_suffix != '.md':
-            continue
-        if os.path.isdir(file_path):
-            continue
-        exec(file_name, file_path)
+    def traverse_obsidian_files(current_path):
+        for file_name in os.listdir(current_path):
+            file_path = os.path.join(current_path, file_name)
+            if os.path.isdir(file_path):
+                traverse_obsidian_files(file_path)
+                continue
+            file_suffix = os.path.splitext(file_name)[1]  # 笔记后缀
+            if file_suffix != '.md':
+                continue
+            exec(file_name, file_path)
+
+    traverse_obsidian_files(OBSIDIAN_PATH)
 
 
 if __name__ == "__main__":
